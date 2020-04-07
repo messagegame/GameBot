@@ -1,0 +1,12 @@
+{% extends "game/game.template.html" %}
+
+<link href="{{ url_for('static', filename='tictactoe/tictactoe.css') }}" />
+
+{% block gamecontent %} <!-- ... use <table> -->
+
+<table>
+    <tr><td>{{stateData[0][0]}}</td><td>{{stateData[1][0]}}</td><td>{{stateData[2][0]}}</td></tr>
+    <tr><td>{{stateData[0][1]}}</td><td>{{stateData[1][1]}}</td><td>{{stateData[2][1]}}</td></tr>
+    <tr><td>{{stateData[0][2]}}</td><td>{{stateData[1][2]}}</td><td>{{stateData[2][2]}}</td></tr>
+</table>
+{% endblock %}
