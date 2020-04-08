@@ -1,5 +1,6 @@
 from GameBot.games.game.gamestate import GameState
 import string
+import random
 
 class TicTacToeState(GameState):
     def __init__(self):
@@ -7,4 +8,4 @@ class TicTacToeState(GameState):
         self.states = {"": [[0,0,0], [0,0,0], [0,0,0]]}
     
     def addState(self, state):
-        super().addState(state)
+        return super().addState(state)

@@ -11,6 +11,7 @@ class TicTacToeGame(Game):
         if state:
             return render_template("tictactoe/tictactoe.template.html", stateData=state, 
                 gameEditable=(stateId == self.state.lastState)) # Can only edit if this is actually the previous state ID
+                # TODO: Handle gameEditable
         return False
 
     def setState(self, state):

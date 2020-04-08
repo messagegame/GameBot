@@ -2,11 +2,85 @@
 
 <link href="{{ url_for('static', filename='tictactoe/tictactoe.css') }}" />
 
+
 {% block gamecontent %} <!-- ... use <table> -->
 
-<table>
-    <tr><td>{{stateData[0][0]}}</td><td>{{stateData[1][0]}}</td><td>{{stateData[2][0]}}</td></tr>
-    <tr><td>{{stateData[0][1]}}</td><td>{{stateData[1][1]}}</td><td>{{stateData[2][1]}}</td></tr>
-    <tr><td>{{stateData[0][2]}}</td><td>{{stateData[1][2]}}</td><td>{{stateData[2][2]}}</td></tr>
-</table>
+<script src="{{ url_for('static', filename='tictactoe/tictactoe.js') }}"></script>
+
+<div>
+    <table>
+        <tr>
+            {% for i in stateData[0] %}
+                {% if i == 0 %}<td onclick="playMove(0, {{loop.index - 1}})" id="0,{{loop.index - 1}}"></td>{% endif %}
+                {% if i == 1 %}<td onclick="playMove(0, {{loop.index - 1}})" id="0,{{loop.index - 1}}" class="Red"></td>{% endif %}
+                {% if i == 2 %}<td onclick="playMove(0, {{loop.index - 1}})" id="0,{{loop.index - 1}}" class="Blue"></td>{% endif %}
+            {% endfor %}
+        </tr>
+        <tr>
+            {% for i in stateData[1] %}
+                {% if i == 0 %}<td onclick="playMove(1, {{loop.index - 1}})" id="1,{{loop.index - 1}}" ></td>{% endif %}
+                {% if i == 1 %}<td onclick="playMove(1, {{loop.index - 1}})" id="1,{{loop.index - 1}}" class="Red"></td>{% endif %}
+                {% if i == 2 %}<td onclick="playMove(1, {{loop.index - 1}})" id="1,{{loop.index - 1}}" class="Blue"></td>{% endif %}
+            {% endfor %}
+        </tr>
+        <tr>
+            {% for i in stateData[2] %}
+                {% if i == 0 %}<td onclick="playMove(2, {{loop.index - 1}})" id="2,{{loop.index - 1}}" ></td>{% endif %}
+                {% if i == 1 %}<td onclick="playMove(2, {{loop.index - 1}})" id="2,{{loop.index - 1}}" class="Red"></td>{% endif %}
+                {% if i == 2 %}<td onclick="playMove(2, {{loop.index - 1}})" id="2,{{loop.index - 1}}" class="Blue"></td>{% endif %}
+            {% endfor %}
+        </tr>
+    </table>
+</div>
+<style>
+    div {
+        width: 600px;
+        height: 600px;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    td {
+        width: 33.3%;
+        border: 6px solid #222;
+        vertical-align: middle;
+    }
+    td::after {
+        content: "";
+        display: block;
+        margin-top: 100%
+    }
+    td {
+        border: 6px solid #222;
+        padding: 0px;
+    }
+    tr {
+        margin: 0;
+        padding: 0;
+    }
+    td:first-of-type {
+        border-left: none;
+        border-top: none;
+    }
+
+    td:nth-of-type(2) {
+        border-top: none;
+    }
+
+    td:nth-of-type(3) {
+        border-right: none;
+        border-top: none;
+    }
+
+    tr:nth-of-type(3) td {
+        border-bottom: none;
+    }
+    .Red {
+        background: red;
+    }
+    .Blue {
+        background: #00a2e8;
+    }
+</style>
 {% endblock %}

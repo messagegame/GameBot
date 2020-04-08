@@ -1,4 +1,5 @@
 import string
+import random
 
 class GameState:
     """
@@ -19,6 +20,8 @@ class GameState:
             
         self.states[stateId] = state
         self.lastState = stateId
+
+        print(f"[debug gamestate] stateId is {stateId}")
 
         return stateId
 

@@ -2,7 +2,10 @@ from GameBot.server import app
 from GameBot.games.game.game import Game
 from GameBot.games.game.gamemanager import GameManager#
 from GameBot.games.tictactoe.tictactoegame import TicTacToeGame
-from flask import request, jsonify
+from flask import request, jsonify, url_for
+from flask_cors import cross_origin
+from urllib.parse import urljoin
+import json
 
 gameMapping = {
     "game": Game,
@@ -13,13 +16,27 @@ gameManager = GameManager() # You have to call /tictactoe/create every time you 
 @app.route('/<game>/setState')
 def setState(game):
     gameId = request.values.get("gameId")
-    stateId = request.values.get("stateId")
+    state = request.values.get("state")
 
-    return f"State {state} is Invalid for {game}?{id}"
+    print(f"[debug routes/setState] state is {state}")
 
-@app.route('/<game>/getSetState?id=<id>')
-def getSetState(game):
-    return f"{game}?{id} does not have a setState URL"
+    newStateId = gameManager.games.get(gameId).state.addState(json.loads(state))
+    print(f"[debug routes/setState] newStateId is {newStateId}")  
+
+    return jsonify({"stateId": newStateId})
+ 
+@app.route('/<game>/getStateUIUrl') 
+@cross_origin()
+def getStateUIUrl(game): 
+    gameId = request.values.get("gameId")
+    stateId = request.values.get("stateId") # Optional, if the client requests it.
+
+    newStateId = gameManager.games.get(gameId).state.lastState
+
+    if stateId:
+        newStateId = stateId
+    
+    return jsonify({"stateUIUrl": urljoin(request.url_root, url_for("stateUI", game=game, gameId=gameId, stateId=newStateId)) })
 
 @app.route('/<game>/stateUI')
 def stateUI(game):
